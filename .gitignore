@@ -1,0 +1,16 @@
+dev.Business/obj/
+dev.Business/bin/
+dev/bin/
+dev/obj/
+.vs/
+dev.Core/obj/
+dev.Core/bin/
+dev.Entities/obj/
+dev.Entities/bin/
+dev.App/dist/
+dev.App/node_modules/
+dev.Api/obj/
+dev.Api/bin/
+packages/
+dev.Console/obj/
+dev.Console/bin/
