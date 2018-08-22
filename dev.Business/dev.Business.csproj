@@ -80,9 +80,7 @@
     <Compile Include="Validators\User\EmailNotNullOrEmpty.cs" />
     <Compile Include="Validators\User\FirstNameNotNullOrEmpty.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Jobs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
