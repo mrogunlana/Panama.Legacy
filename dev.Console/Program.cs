@@ -1,10 +1,8 @@
 ﻿using Autofac;
 using dev.Core.Commands;
 using dev.Core.IoC;
-using dev.Core.Jobs;
 using dev.Core.Logger;
 using dev.Core.Sql;
-using Quartz;
 using System;
 using System.Linq;
 
@@ -18,7 +16,6 @@ namespace dev.Console
 
             //INFRASTRUCTURE
             builder.RegisterType<NLog>().As<ILog>();
-            builder.RegisterType<Scheduler>().As<Core.Jobs.IScheduler>().SingleInstance();
             builder.RegisterType<SqlQuery>().As<IQuery>();
             builder.RegisterType<Handler>().As<IHandler>();
 
@@ -26,13 +23,6 @@ namespace dev.Console
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                    .Where(t => t.IsAssignableTo<ICommand>())
                    .Named<ICommand>(t => t.Name)
-                   .AsImplementedInterfaces()
-                   .SingleInstance();
-
-            //Register all jobs -- singletons
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                   .Where(t => t.IsAssignableTo<IJob>())
-                   .Named<IJob>(t => t.Name)
                    .AsImplementedInterfaces()
                    .SingleInstance();
 
