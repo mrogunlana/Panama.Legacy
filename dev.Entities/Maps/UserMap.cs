@@ -9,7 +9,8 @@ namespace dev.Entities.Maps
         {
             Table("User");
 
-            Map(x => x._ID).Key(KeyType.Assigned);
+            Map(x => x._ID).Key(KeyType.Identity);
+            Map(x => x.ConfirmPassword).Ignore();
             Map(x => x.Created).ReadOnly();
 
             AutoMap();

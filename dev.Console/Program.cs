@@ -1,8 +1,12 @@
 ﻿using Autofac;
+using dev.Business.Commands;
+using dev.Business.Validators;
 using dev.Core.Commands;
 using dev.Core.IoC;
 using dev.Core.Logger;
+using dev.Core.Security.Interfaces;
 using dev.Core.Sql;
+using dev.Entities.Models;
 using System;
 using System.Linq;
 
@@ -19,6 +23,20 @@ namespace dev.Console
             builder.RegisterType<SqlQuery>().As<IQuery>();
             builder.RegisterType<Handler>().As<IHandler>();
 
+            //Register all encryptors -- singletons
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                   .Where(t => t.IsAssignableTo<IStringEncryptor>())
+                   .Named<IStringEncryptor>(t => t.Name)
+                   .AsImplementedInterfaces()
+                   .SingleInstance();
+
+            //Register all validators -- singletons
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                   .Where(t => t.IsAssignableTo<IValidation>())
+                   .Named<IValidation>(t => t.Name)
+                   .AsImplementedInterfaces()
+                   .SingleInstance();
+
             //Register all commands -- singletons
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                    .Where(t => t.IsAssignableTo<ICommand>())
@@ -34,17 +52,27 @@ namespace dev.Console
         {
             Register();
 
-            var scheduler = CompositionRoot.Resolve<Core.Jobs.IScheduler>();
+            var result = CompositionRoot.Resolve<IHandler>()
+                .Add(new User(){
+                    FirstName = "User with role id",
+                    LastName = "Last",
+                    Email = "First.role@test.com",
+                    Password = "abc1234",
+                    ConfirmPassword = "abc1234"
+                })
+                .Validate<FirstNameNotNullOrEmpty>()
+                .Validate<EmailNotNullOrEmpty>()
+                .Validate<PasswordNotNullOrEmpty>()
+                .Validate<ConfirmPasswordNotNullOrEmpty>()
+                .Validate<PasswordAndConfirmPasswordMustMatch>()
+                .Validate<EmailNotExist>()
+                .Command<GenerateUserId>()
+                .Command<HashUserPassword>()
+                .Command<SaveUser>()
+                .Invoke();
 
-            //TODO: Enter test logic here if needed...
-
-            scheduler.Start();
-
-            System.Console.WriteLine($"\nRunning ({scheduler.Count()}) Task(s) Every Minute.");
             System.Console.WriteLine("\nPress any key to exit.");
             System.Console.ReadKey();
-
-            scheduler.Stop();
         }
     }
 }
