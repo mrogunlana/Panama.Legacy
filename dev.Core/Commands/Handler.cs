@@ -72,7 +72,7 @@ namespace dev.Core.Commands
             {
                 _log.LogException<Handler>(ex);
 
-                return new Result() { Success = false, Message = $"Looks like there was a problem with your request." };
+                return new Result() { Success = false, Message = $"Looks like there was a problem with your request: {ex.Message}. Stack: {ex.StackTrace}" };
             }
             finally
             {

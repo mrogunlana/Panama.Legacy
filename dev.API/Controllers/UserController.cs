@@ -22,5 +22,43 @@ namespace dev.Api.Controllers
         {
             return System.DateTime.Now.ToShortDateString();
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("user/save")]
+        public IResult Save([FromBody]User user)
+        {
+            return _handler
+                .Add(user)
+                .Validate<FirstNameNotNullOrEmpty>()
+                .Validate<EmailNotNullOrEmpty>()
+                .Validate<PasswordNotNullOrEmpty>()
+                .Validate<ConfirmPasswordNotNullOrEmpty>()
+                .Validate<PasswordAndConfirmPasswordMustMatch>()
+                .Validate<EmailNotExist>()
+                .Command<GenerateUserId>()
+                .Command<HashUserPassword>()
+                .Command<SaveUser>()
+                .Invoke();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("user/update")]
+        public IResult Update([FromBody]User user)
+        {
+            return _handler
+                .Add(user)
+                .Validate<FirstNameNotNullOrEmpty>()
+                .Validate<EmailNotNullOrEmpty>()
+                .Validate<PasswordNotNullOrEmpty>()
+                .Validate<ConfirmPasswordNotNullOrEmpty>()
+                .Validate<PasswordAndConfirmPasswordMustMatch>()
+                .Validate<EmailNotExist>()
+                .Command<GenerateUserId>()
+                .Command<HashUserPassword>()
+                .Command<SaveUser>()
+                .Invoke();
+        }
     }
 }

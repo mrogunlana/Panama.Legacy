@@ -69,11 +69,11 @@
     <Compile Include="Commands\GetUserByUsername.cs" />
     <Compile Include="Commands\GenerateUserId.cs" />
     <Compile Include="Commands\RemoveUser.cs" />
+    <Compile Include="Commands\HashUserPassword.cs" />
     <Compile Include="Commands\SaveUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\User\UserExist.cs" />
     <Compile Include="Validators\User\EmailNotExist.cs" />
-    <Compile Include="Validators\User\UsernameNotNullOrEmpty.cs" />
     <Compile Include="Validators\User\PasswordAndConfirmPasswordMustMatch.cs" />
     <Compile Include="Validators\User\ConfirmPasswordNotNullOrEmpty.cs" />
     <Compile Include="Validators\User\PasswordNotNullOrEmpty.cs" />

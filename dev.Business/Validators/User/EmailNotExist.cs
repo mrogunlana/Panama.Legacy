@@ -20,7 +20,7 @@ namespace dev.Business.Validators
                 return false;
 
             foreach (var user in models)
-                if (_query.Exist<User>("select * from Users where Email = @Email", new { user.Email }))
+                if (_query.Exist<User>("select * from [User] where Email = @Email", new { user.Email }))
                     return false;
 
             return true;

@@ -17,10 +17,10 @@ namespace dev.Business.Commands
         {
             var username = data.KvpGetSingle<string>("username");
 
-            if (_query.Exist<User>("select * from Users where UserName = @UserName", new { username }))
-                data.AddRange(_query.Get<User>("select * from Users where UserName = @UserName", new { UserName = username }));
+            if (_query.Exist<User>("select * from [User] where UserName = @UserName", new { username }))
+                data.AddRange(_query.Get<User>("select * from [User] where UserName = @UserName", new { UserName = username }));
             else
-                data.AddRange(_query.Get<User>("select * from Users where Email = @Email", new { Email = username }));
+                data.AddRange(_query.Get<User>("select * from [User] where Email = @Email", new { Email = username }));
 
         }
     }
