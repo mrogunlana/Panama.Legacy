@@ -137,7 +137,10 @@
     <Compile Include="Commands\Interfaces\IValidation.cs" />
     <Compile Include="Entities\IResult.cs" />
     <Compile Include="Entities\Result.cs" />
-    <Compile Include="IoC\CompositionRoot.cs" />
+    <Compile Include="IoC\Autofac\AutofacServiceLocator.cs" />
+    <Compile Include="IoC\Autofac\CompositionRoot.cs" />
+    <Compile Include="IoC\IServiceLocator.cs" />
+    <Compile Include="IoC\ServiceLocator.cs" />
     <Compile Include="Jobs\IScheduler.cs" />
     <Compile Include="Jobs\Scheduler.cs" />
     <Compile Include="Logger\ILog.cs" />

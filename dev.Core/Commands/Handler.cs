@@ -11,21 +11,20 @@ namespace dev.Core.Commands
     public class Handler : IHandler
     {
         private ILog _log;
+        private readonly IServiceLocator _serviceLocator;
 
         public List<IModel> Data { get; set; }
         public List<ICommand> Commands { get; set; }
         public List<IValidation> Validators { get; set; } 
 
-        public Handler(ILog log)
+        public Handler(ILog log, IServiceLocator serviceLocator)
         {
-            if (Data == null)
-                Data = new List<IModel>();
-            if (Commands == null)
-                Commands = new List<ICommand>();
-            if (Validators == null)
-                Validators = new List<IValidation>();
-
+            Data = new List<IModel>();
+            Commands = new List<ICommand>();
+            Validators = new List<IValidation>();
+            
             _log = log;
+            _serviceLocator = serviceLocator;
         }
 
         private IResult Validate()
@@ -93,18 +92,20 @@ namespace dev.Core.Commands
 
         public IHandler Command<Command>() where Command : ICommand
         {
-            Commands.Add(CompositionRoot.Resolve<ICommand>(typeof(Command).Name));
+            Commands.Add(_serviceLocator.Resolve<ICommand>(typeof(Command).Name));
 
             return this;
         }
 
         public IHandler Validate<Validator>() where Validator : IValidation
         {
-            Validators.Add(CompositionRoot.Resolve<IValidation>(typeof(Validator).Name));
+            
+            Validators.Add(_serviceLocator.Resolve<IValidation>(typeof(Validator).Name));
 
             return this;
         }
-        
+
+     
         public IResult Invoke()
         {
             IResult result = new Result();
