@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using dev.Business.Validators;
 using dev.Core.Commands;
 using dev.Core.IoC;
 using dev.Core.Logger;
@@ -17,8 +18,7 @@ namespace dev.Console
             //INFRASTRUCTURE
             builder.RegisterType<NLog>().As<ILog>();
             builder.RegisterType<SqlQuery>().As<IQuery>();
-            builder.RegisterType<Handler>().As<IHandler>();
-
+            
             //Register all commands -- singletons
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                    .Where(t => t.IsAssignableTo<ICommand>())
@@ -26,14 +26,32 @@ namespace dev.Console
                    .AsImplementedInterfaces()
                    .SingleInstance();
 
-            var container = builder.Build();
+            //Register all validators -- singletons
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                   .Where(t => t.IsAssignableTo<IValidation>())
+                   .Named<IValidation>(t => t.Name)
+                   .AsImplementedInterfaces()
+                   .SingleInstance();
 
-            CompositionRoot.Wire(container);
+            IContainer container = builder.Build();
+            ServiceLocator.SetLocator(new AutofacServiceLocator(container));
+
         }
         static void Main(string[] args)
         {
             Register();
 
+            var user = new dev.Entities.Models.User();
+            user.LastName = "Smith";
+            var handler = new Handler(null, ServiceLocator.Current);
+            handler.Add(user);
+            var result = handler.Validate<FirstNameNotNullOrEmpty>()
+                                .Validate<EmailNotNullOrEmpty>()
+                                .Invoke();
+            System.Console.WriteLine(string.Join(",", result.Messages.ToArray()));
+            System.Console.ReadKey();
+
+            /*
             var scheduler = CompositionRoot.Resolve<Core.Jobs.IScheduler>();
 
             //TODO: Enter test logic here if needed...
@@ -45,6 +63,8 @@ namespace dev.Console
             System.Console.ReadKey();
 
             scheduler.Stop();
+            */
+
         }
     }
 }

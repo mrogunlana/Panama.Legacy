@@ -35,9 +35,8 @@ namespace dev.Core.Commands
             {
                 if (validator.IsValid(Data))
                     continue;
-                result.Message = validator.Message();
+                result.AddMessage(validator.Message());
                 result.Success = false;
-                break;
             }
 
             return result;
@@ -71,7 +70,12 @@ namespace dev.Core.Commands
             {
                 _log.LogException<Handler>(ex);
 
-                return new Result() { Success = false, Message = $"Looks like there was a problem with your request." };
+                var result = new Result()
+                {
+                    Success = false
+                };
+                result.AddMessage($"Looks like there was a problem with your request.");
+                return result;
             }
             finally
             {
@@ -122,13 +126,6 @@ namespace dev.Core.Commands
             return result;
         }
 
-        public IHandler Reset()
-        {
-            Data.Clear();
-            Commands.Clear();
-            Validators.Clear();
-
-            return this;
-        }
+       
     }
 }

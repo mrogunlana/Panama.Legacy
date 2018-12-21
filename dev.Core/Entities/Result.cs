@@ -11,6 +11,8 @@ namespace dev.Core.Entities
     [KnownType("DataContractKnownTypes")]
     public class Result : IResult
     {
+        private HashSet<string> _messages;
+
         [OnSerialized]
         void OnSerialization(StreamingContext c)
         {
@@ -25,11 +27,12 @@ namespace dev.Core.Entities
         {
             if (Data == null)
                 Data = new List<IModel>();
+
+            _messages = new HashSet<string>();
         }
         public Result()
         {
             Success = true;
-
             _Init();
         }
 
@@ -37,7 +40,18 @@ namespace dev.Core.Entities
         public List<IModel> Data { get; set; }
 
         [DataMember]
-        public string Message { get; set; }
+        public IEnumerable<string> Messages
+        {
+            get
+            {
+                return _messages;
+            }
+        }
+
+        public void AddMessage(string message)
+        {
+            _messages.Add(message);
+        }
 
         [DataMember]
         public bool Success { get; set; }
