@@ -1,39 +1,28 @@
-﻿using System.Web.Http;
-using System.Collections;
-using System.Linq;
-using dev.Business.Commands;
+﻿using dev.Business.Commands;
 using dev.Business.Validators;
 using dev.Core.Commands;
 using dev.Core.Entities;
 using dev.Entities.Models;
-using dev.Core.IoC;
-
+using System.Web.Http;
 
 namespace dev.Api.Controllers
 {
     public class UserController : ApiController
     {
-      
-        public UserController()
-        {
+        private IHandler _handler;
 
+        public UserController(IHandler handler)
+        {
+            _handler = handler;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
-        public string[] Echo()
+        public string Echo()
         {
-            var user = new dev.Entities.Models.User();
-            user.LastName = "Smith";
-            var handler = new Handler(null, ServiceLocator.Current);
-            handler.Add(user);
-            var result = handler.Validate<FirstNameNotNullOrEmpty>()
-                                .Validate<EmailNotNullOrEmpty>()
-                                .Invoke();
-            return result.Messages.ToArray();
+            return System.DateTime.Now.ToShortDateString();
         }
 
-<<<<<<< HEAD
         [HttpPost]
         [AllowAnonymous]
         [Route("user/save")]
@@ -71,7 +60,5 @@ namespace dev.Api.Controllers
                 .Command<SaveUser>()
                 .Invoke();
         }
-=======
->>>>>>> 0d9d3c145859863a1a26b534f91937c777fb3309
     }
 }
