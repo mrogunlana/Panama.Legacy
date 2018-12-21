@@ -13,6 +13,5 @@ namespace dev.Core.Commands
         IHandler Validate<Validator>() where Validator : IValidation;
         IHandler Add(IModel data);
         IResult Invoke();
-        IHandler Reset();
     }
 }
