@@ -4,9 +4,9 @@ namespace dev.Core.IoC
 {
     public class AutofacServiceLocator : IServiceLocator
     {
-        private static IContainer _kernel = null;
+        private static Autofac.IContainer _kernel = null;
 
-        public AutofacServiceLocator(IContainer kernel)
+        public AutofacServiceLocator(Autofac.IContainer kernel)
         {
             _kernel = kernel;
         }
