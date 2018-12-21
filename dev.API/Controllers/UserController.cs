@@ -1,26 +1,37 @@
-﻿using dev.Business.Commands;
+﻿using System.Web.Http;
+using System.Collections;
+using System.Linq;
+using dev.Business.Commands;
 using dev.Business.Validators;
 using dev.Core.Commands;
 using dev.Core.Entities;
 using dev.Entities.Models;
-using System.Web.Http;
+using dev.Core.IoC;
+
 
 namespace dev.Api.Controllers
 {
     public class UserController : ApiController
     {
-        private IHandler _handler;
-
-        public UserController(IHandler handler)
+      
+        public UserController()
         {
-            _handler = handler;
+
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
-        public string Echo()
+        public string[] Echo()
         {
-            return System.DateTime.Now.ToShortDateString();
+            var user = new dev.Entities.Models.User();
+            user.LastName = "Smith";
+            var handler = new Handler(null, ServiceLocator.Current);
+            handler.Add(user);
+            var result = handler.Validate<FirstNameNotNullOrEmpty>()
+                                .Validate<EmailNotNullOrEmpty>()
+                                .Invoke();
+            return result.Messages.ToArray();
         }
+
     }
 }
