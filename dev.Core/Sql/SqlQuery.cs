@@ -65,7 +65,8 @@ namespace dev.Core.Sql
 
         public void Save<T>(T obj, object parameters) where T : class
         {
-            var exist = Get<T>($"select * from [{ _sql.Configuration.GetMap<T>().TableName }] where ID = @ID", parameters);
+            var properties = string.Join(" AND ", parameters.GetType().GetProperties().Select(x => $"{x.Name} = @{x.Name}"));
+            var exist = Get<T>($"select * from [{ _sql.Configuration.GetMap<T>().TableName }] where {properties}", parameters);
             if (exist.Count == 0)
                 Insert(obj);
             else
