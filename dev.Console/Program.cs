@@ -1,12 +1,9 @@
 ﻿using Autofac;
-using dev.Business.Commands;
 using dev.Business.Validators;
 using dev.Core.Commands;
 using dev.Core.IoC;
 using dev.Core.Logger;
-using dev.Core.Security.Interfaces;
 using dev.Core.Sql;
-using dev.Entities.Models;
 using System;
 using System.Linq;
 
@@ -21,12 +18,11 @@ namespace dev.Console
             //INFRASTRUCTURE
             builder.RegisterType<NLog>().As<ILog>();
             builder.RegisterType<SqlQuery>().As<IQuery>();
-            builder.RegisterType<Handler>().As<IHandler>();
 
-            //Register all encryptors -- singletons
+            //Register all commands -- singletons
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                   .Where(t => t.IsAssignableTo<IStringEncryptor>())
-                   .Named<IStringEncryptor>(t => t.Name)
+                   .Where(t => t.IsAssignableTo<ICommand>())
+                   .Named<ICommand>(t => t.Name)
                    .AsImplementedInterfaces()
                    .SingleInstance();
 
@@ -37,42 +33,38 @@ namespace dev.Console
                    .AsImplementedInterfaces()
                    .SingleInstance();
 
-            //Register all commands -- singletons
-            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                   .Where(t => t.IsAssignableTo<ICommand>())
-                   .Named<ICommand>(t => t.Name)
-                   .AsImplementedInterfaces()
-                   .SingleInstance();
+            IContainer container = builder.Build();
+            ServiceLocator.SetLocator(new AutofacServiceLocator(container));
 
-            var container = builder.Build();
-
-            CompositionRoot.Wire(container);
         }
         static void Main(string[] args)
         {
             Register();
 
-            var result = CompositionRoot.Resolve<IHandler>()
-                .Add(new User(){
-                    FirstName = "User with role id",
-                    LastName = "Last",
-                    Email = "First.role@test.com",
-                    Password = "abc1234",
-                    ConfirmPassword = "abc1234"
-                })
-                .Validate<FirstNameNotNullOrEmpty>()
-                .Validate<EmailNotNullOrEmpty>()
-                .Validate<PasswordNotNullOrEmpty>()
-                .Validate<ConfirmPasswordNotNullOrEmpty>()
-                .Validate<PasswordAndConfirmPasswordMustMatch>()
-                .Validate<EmailNotExist>()
-                .Command<GenerateUserId>()
-                .Command<HashUserPassword>()
-                .Command<SaveUser>()
-                .Invoke();
+            var user = new dev.Entities.Models.User();
+            user.LastName = "Smith";
+            var handler = new Handler(null, ServiceLocator.Current);
+            handler.Add(user);
+            var result = handler.Validate<FirstNameNotNullOrEmpty>()
+                                .Validate<EmailNotNullOrEmpty>()
+                                .Invoke();
+            System.Console.WriteLine(string.Join(",", result.Messages.ToArray()));
+            System.Console.ReadKey();
 
+            /*
+            var scheduler = CompositionRoot.Resolve<Core.Jobs.IScheduler>();
+
+            //TODO: Enter test logic here if needed...
+
+            scheduler.Start();
+
+            System.Console.WriteLine($"\nRunning ({scheduler.Count()}) Task(s) Every Minute.");
             System.Console.WriteLine("\nPress any key to exit.");
             System.Console.ReadKey();
+
+            scheduler.Stop();
+            */
+
         }
     }
 }
