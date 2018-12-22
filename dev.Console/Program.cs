@@ -41,13 +41,14 @@ namespace dev.Console
         {
             Register();
 
-            var user = new dev.Entities.Models.User();
-            user.LastName = "Smith";
-            var handler = new Handler(null, ServiceLocator.Current);
-            handler.Add(user);
-            var result = handler.Validate<FirstNameNotNullOrEmpty>()
-                                .Validate<EmailNotNullOrEmpty>()
-                                .Invoke();
+            var result = new Handler(ServiceLocator.Current)
+                .Add(new Entities.Models.User(){
+                    LastName = "Smith"
+                })
+                .Validate<FirstNameNotNullOrEmpty>()
+                .Validate<EmailNotNullOrEmpty>()
+                .Invoke();
+
             System.Console.WriteLine(string.Join(",", result.Messages.ToArray()));
             System.Console.ReadKey();
 

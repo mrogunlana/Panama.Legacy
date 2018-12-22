@@ -17,14 +17,14 @@ namespace dev.Core.Commands
         public List<ICommand> Commands { get; set; }
         public List<IValidation> Validators { get; set; }
 
-        public Handler(ILog log, IServiceLocator serviceLocator)
+        public Handler(IServiceLocator locator)
         {
             Data = new List<IModel>();
             Commands = new List<ICommand>();
             Validators = new List<IValidation>();
 
-            _log = log;
-            _serviceLocator = serviceLocator;
+            _serviceLocator = locator;
+            _log = _serviceLocator.Resolve<ILog>();
         }
 
         private IResult Validate()
@@ -103,12 +103,10 @@ namespace dev.Core.Commands
 
         public IHandler Validate<Validator>() where Validator : IValidation
         {
-
             Validators.Add(_serviceLocator.Resolve<IValidation>(typeof(Validator).Name));
 
             return this;
         }
-
 
         public IResult Invoke()
         {
@@ -125,7 +123,5 @@ namespace dev.Core.Commands
 
             return result;
         }
-
-
     }
 }
