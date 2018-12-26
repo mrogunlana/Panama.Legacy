@@ -137,6 +137,8 @@ Two sample projects are included to serve as examples for configuring a Web Api 
 
 For more detailed info on this project please see the following:
 * [Intro to Command-Handler-Pattern](https://youtu.be/T0Nku5qsEqg) - video introduction
+* [Command-Handler-Pattern Manual](https://goo.gl/6KAr37) - pdf
+
 
 
 
