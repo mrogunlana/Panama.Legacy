@@ -4,6 +4,7 @@ using dev.Core.Logger;
 using dev.Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Diagnostics;
 
 namespace dev.Core.Commands
@@ -33,11 +34,10 @@ namespace dev.Core.Commands
 
             foreach (var validator in Validators)
             {
-                if (validator.IsValid(Data))
-                    continue;
-                result.AddMessage(validator.Message());
-                result.Success = false;
+                if (!validator.IsValid(Data))
+                    result.AddMessage(validator.Message());
             }
+            result.Success = !result.Messages.Any();
 
             return result;
         }
