@@ -43,10 +43,12 @@ namespace dev.Console
 
             var result = new Handler(ServiceLocator.Current)
                 .Add(new Entities.Models.User(){
-                    LastName = "Smith"
+                    LastName = "Smith",
+                    Email = "test123"
                 })
                 .Validate<FirstNameNotNullOrEmpty>()
                 .Validate<EmailNotNullOrEmpty>()
+                .Validate<EmailNotExist>()
                 .Invoke();
 
             System.Console.WriteLine(string.Join(",", result.Messages.ToArray()));

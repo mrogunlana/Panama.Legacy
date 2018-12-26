@@ -302,6 +302,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="appSettings.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
@@ -347,4 +348,7 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <!-- <Target Name="BeforeBuild">
+    <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+  </Target>  -->
 </Project>
