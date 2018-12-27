@@ -1,4 +1,5 @@
 ﻿using dev.Core.Commands;
+using dev.Core.Entities;
 using dev.Core.Sql;
 using dev.Entities.Models;
 using System.Collections.Generic;

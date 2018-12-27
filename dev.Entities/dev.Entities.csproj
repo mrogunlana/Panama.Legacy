@@ -64,16 +64,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\ModelExtensions.cs" />
-    <Compile Include="Interfaces\IModel.cs" />
     <Compile Include="Maps\UserMap.cs" />
-    <Compile Include="Models\KeyValuePair.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dev.Core\dev.Core.csproj">
+      <Project>{bf41f8a5-339f-49da-9eeb-3b722a529899}</Project>
+      <Name>dev.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
