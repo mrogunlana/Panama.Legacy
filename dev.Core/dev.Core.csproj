@@ -136,6 +136,7 @@
     <Compile Include="Commands\Interfaces\IHandler.cs" />
     <Compile Include="Commands\Interfaces\IValidation.cs" />
     <Compile Include="Entities\IResult.cs" />
+    <Compile Include="Entities\KeyValuePair.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="IoC\Autofac\AutofacServiceLocator.cs" />
     <Compile Include="IoC\Autofac\CompositionRoot.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="Logger\NLog.cs" />
     <Compile Include="Messaging\EmailProvider.cs" />
     <Compile Include="Messaging\Interface\IEmailProvider.cs" />
+    <Compile Include="Entities\Extensions\ModelExtensions.cs" />
+    <Compile Include="Entities\Interfaces\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\SHA256CryptoServiceEncryptor.cs" />
     <Compile Include="Security\Base64Encryptor.cs" />
@@ -162,12 +165,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\dev.Entities\dev.Entities.csproj">
-      <Project>{526b18ff-2f29-4080-9872-2b63aaa1c446}</Project>
-      <Name>dev.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

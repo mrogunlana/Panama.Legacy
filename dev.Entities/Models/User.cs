@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dev.Core.Entities;
+using System;
 
 namespace dev.Entities.Models
 {

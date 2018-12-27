@@ -1,4 +1,5 @@
 ﻿using dev.Core.Commands;
+using dev.Core.Entities;
 using dev.Core.IoC;
 using dev.Core.Security;
 using dev.Core.Security.Interfaces;

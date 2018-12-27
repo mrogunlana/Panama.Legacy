@@ -1,4 +1,4 @@
-﻿namespace dev.Entities.Models
+﻿namespace dev.Core.Entities
 {
     public interface IModel
     {

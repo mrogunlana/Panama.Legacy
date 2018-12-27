@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace dev.Entities.Models
+namespace dev.Core.Entities
 {
     public static class ModelExtensions
     {

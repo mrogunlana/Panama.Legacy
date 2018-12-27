@@ -1,4 +1,4 @@
-﻿using dev.Entities.Models;
+﻿using dev.Core.Entities;
 using System.Collections.Generic;
 
 namespace dev.Core.Commands
