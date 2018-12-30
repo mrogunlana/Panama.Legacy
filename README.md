@@ -1,9 +1,9 @@
-# Command-Handler-Pattern
+# Panama - a simple command architecture for .Net
 
-Command-handler-pattern is a unique design pattern, created to simplify software design and more suitable in designing systems for over 70% of medium and large scale business design projects. It's goal is to reduce complexity normally found in N-Tier application where there are multiple layers (i.e. Service Layer, DataAcces Layer) required to invoke commands (i.e. save an object to a database). With the command-handler-pattern, the ability to invoke commands is reduced to one object that can be called directly from the UI or other top layer that a user or service may interact with directly.
+Panama is a unique design pattern, created to simplify software design and more suitable in designing systems for over 70% of medium and large scale business design projects. It's goal is to reduce complexity normally found in N-Tier application where there are multiple layers (i.e. Service Layer, DataAcces Layer) required to invoke commands (i.e. save an object to a database). With Panama, the ability to invoke commands is reduced to one object that can be called directly from the UI or other top layer that a user or service may interact with directly.
 
 ## Getting Started
-The command-handler-pattern is built around a central Handler class that uses a fluent api to wire up validators and commands and invoked using the Invoke() method. 
+Panama is built around a central Handler class that uses a fluent api to wire up validators and commands and invoked using the Invoke() method. 
 
 ![alt text](https://raw.githubusercontent.com/mrogunlana/command-handler-pattern/master/screenshots/The-Command-Handler-Architecture-by-Diran-Ogunlana-012.jpg "The-Command-Handler-Architecture-by-Diran-Ogunlana-012.jpg")
 
