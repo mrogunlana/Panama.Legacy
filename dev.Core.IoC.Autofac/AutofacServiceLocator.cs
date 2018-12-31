@@ -1,22 +1,22 @@
 ﻿using Autofac;
 
-namespace dev.Core.IoC
+namespace dev.Core.IoC.Autofac
 {
-    public static class CompositionRoot
+    public class AutofacServiceLocator : IServiceLocator
     {
         private static IContainer _kernel = null;
 
-        public static void Wire(IContainer kernel)
+        public AutofacServiceLocator(IContainer kernel)
         {
             _kernel = kernel;
         }
 
-        public static T Resolve<T>()
+        public T Resolve<T>()
         {
             return _kernel.Resolve<T>();
         }
 
-        public static T Resolve<T>(string name)
+        public T Resolve<T>(string name)
         {
             return _kernel.ResolveNamed<T>(name);
         }

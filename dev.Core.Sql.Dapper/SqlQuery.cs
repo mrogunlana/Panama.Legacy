@@ -8,7 +8,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace dev.Core.Sql
+namespace dev.Core.Sql.Dapper
 {
     public class SqlQuery : IQuery
     {

@@ -1,14 +1,14 @@
-﻿using System;
-using dev.Core.Logger;
+﻿using dev.Core.Logger;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Matchers;
+using External = Quartz;
 
-namespace dev.Core.Jobs
+namespace dev.Core.Jobs.Quartz
 {
     public class Scheduler : IScheduler
     {
-        private readonly Quartz.IScheduler _scheduler;
+        private readonly External.IScheduler _scheduler;
         private readonly ILog _log;
 
         public Scheduler(ILog log)
@@ -35,7 +35,7 @@ namespace dev.Core.Jobs
             _log.LogInformation<Scheduler>($"Scheduler shutdown.");
         }
 
-        public void Queue<T>(T job) where T : IJob
+        public void Queue<T>(T job)
         {
             var name = job.GetType().Name;
 
@@ -47,7 +47,8 @@ namespace dev.Core.Jobs
                         .RepeatForever())
                     .Build();
 
-            IJobDetail detail = JobBuilder.Create<T>()
+            //note: this breaks if T not IJob type...
+            IJobDetail detail = JobBuilder.Create(typeof(T))
                     .WithIdentity($"{name}_Job", "Group1")
                     .Build();
             

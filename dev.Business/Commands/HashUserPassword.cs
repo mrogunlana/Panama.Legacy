@@ -1,6 +1,6 @@
-﻿using dev.Core.Commands;
+﻿using Autofac.Features.AttributeFilters;
+using dev.Core.Commands;
 using dev.Core.Entities;
-using dev.Core.IoC;
 using dev.Core.Security;
 using dev.Core.Security.Interfaces;
 using dev.Entities.Models;
@@ -11,9 +11,9 @@ namespace dev.Business.Commands
     public class HashUserPassword : ICommand
     {
         private IStringEncryptor _encryptor;
-        public HashUserPassword()
+        public HashUserPassword([KeyFilter(nameof(AESEncryptor))] IStringEncryptor encryptor)
         {
-            _encryptor = CompositionRoot.Resolve<IStringEncryptor>(nameof(AESEncryptor));
+            _encryptor = encryptor;
         }
         public void Execute(List<IModel> data)
         {

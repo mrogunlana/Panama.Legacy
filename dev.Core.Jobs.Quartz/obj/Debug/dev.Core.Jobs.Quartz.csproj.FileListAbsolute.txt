@@ -1,0 +1,15 @@
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\obj\Debug\dev.Core.Jobs.Quartz.csprojResolveAssemblyReference.cache
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\obj\Debug\dev.Core.Jobs.Quartz.csproj.CoreCompileInputs.cache
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\dev.Core.Jobs.Quartz.dll.config
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\dev.Core.Jobs.Quartz.dll
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\dev.Core.Jobs.Quartz.pdb
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\Panama.Core.dll
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\Quartz.dll
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\NLog.dll
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\Panama.Core.pdb
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\Panama.Core.dll.config
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\Quartz.pdb
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\Quartz.xml
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\bin\Debug\NLog.xml
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\obj\Debug\dev.Core.Jobs.Quartz.dll
+C:\Projects\command-handler-pattern\dev.Core.Jobs.Quartz\obj\Debug\dev.Core.Jobs.Quartz.pdb

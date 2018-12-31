@@ -1,11 +1,14 @@
 ﻿using Autofac;
+using Autofac.Features.AttributeFilters;
 using Autofac.Integration.WebApi;
 using dev.Core.Commands;
 using dev.Core.IoC;
+using dev.Core.IoC.Autofac;
 using dev.Core.Logger;
 using dev.Core.Security;
 using dev.Core.Security.Interfaces;
 using dev.Core.Sql;
+using dev.Core.Sql.Dapper;
 using Microsoft.Owin;
 using Owin;
 using System;
@@ -23,8 +26,8 @@ namespace dev.Api
 
             builder.RegisterType<NLog>().As<ILog>();
             builder.RegisterType<SqlQuery>().As<IQuery>();
-            builder.RegisterType<AESEncryptor>().Named<IStringEncryptor>(nameof(AESEncryptor));
-            builder.RegisterType<Base64Encryptor>().Named<IStringEncryptor>(nameof(Base64Encryptor));
+            builder.RegisterType<AESEncryptor>().Keyed<IStringEncryptor>(nameof(AESEncryptor));
+            builder.RegisterType<Base64Encryptor>().Keyed<IStringEncryptor>(nameof(Base64Encryptor));
 
             //Register all encryptors -- singletons
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
@@ -39,13 +42,15 @@ namespace dev.Api
                    .Named<IValidation>(t => t.Name)
                    .AsImplementedInterfaces()
                    .SingleInstance();
+                   
 
             //Register all commands -- singletons
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                    .Where(t => t.IsAssignableTo<ICommand>())
                    .Named<ICommand>(t => t.Name)
                    .AsImplementedInterfaces()
-                   .SingleInstance();
+                   .SingleInstance()
+                   .WithAttributeFiltering();
 
             // Register your Web API controllers.
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());

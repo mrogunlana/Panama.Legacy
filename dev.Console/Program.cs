@@ -2,8 +2,10 @@
 using dev.Business.Validators;
 using dev.Core.Commands;
 using dev.Core.IoC;
+using dev.Core.IoC.Autofac;
 using dev.Core.Logger;
 using dev.Core.Sql;
+using dev.Core.Sql.Dapper;
 using System;
 using System.Linq;
 
