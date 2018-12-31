@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Panama</id>
+    <version>1.2.0</version>
+    <title>Panama</title>
+    <authors>Diran Ogunlana</authors>
+    <owners>Diran Ogunlana</owners>
+    <licenseUrl>https://github.com/mrogunlana/Panama/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/mrogunlana/Panama</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple command architecture for .Net developed by Diran Ogunlana</description>
+    <releaseNotes>Beta Release - A simple command architecture for .Net developed by Diran Ogunlana</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>C# micro-framework command cqrs</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="11.0.1" />
+      <dependency id="NLog" version="4.4.12" />
+    </dependencies>
+  </metadata>
+</package>

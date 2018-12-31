@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Panama.Jobs.Quartz")]
-[assembly: AssemblyDescription("A Quartz implementation for Panama, the command architecture for .Net developed by Diran Ogunlana")]
+[assembly: AssemblyTitle("Panama.Security")]
+[assembly: AssemblyDescription("Various Security Protocal Implementations for Panama, the command architecture for .Net developed by Diran Ogunlana")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Panama.Jobs.Quartz")]
+[assembly: AssemblyProduct("Panama.Security")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("02d01070-23cc-4ec0-a7bc-2f125210a258")]
+[assembly: Guid("169ee761-f9e6-42a0-a36e-359aafded4a6")]
 
 // Version information for an assembly consists of the following four values:
 //
