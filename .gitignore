@@ -10,4 +10,12 @@ Panama.Sql.Dapper/bin/
 Panama.Tests/obj/
 Panama.Tests/bin/
 packages/
+Examples/autofac-webapi/.vs/
+Examples/autofac-webapi/dev.API/obj/
+Examples/autofac-webapi/dev.API/bin/
+Examples/autofac-webapi/dev.API/appSettings.config
+Examples/autofac-webapi/dev.Business/obj/
+Examples/autofac-webapi/dev.Business/bin/
+Examples/autofac-webapi/dev.Entities/obj/
+Examples/autofac-webapi/dev.Entities/bin/
 
