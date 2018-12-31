@@ -5,7 +5,7 @@ Panama is a unique design pattern, created to simplify software design and more 
 ## Getting Started
 Panama is built around a central Handler class that uses a fluent api to wire up validators and commands and invoked using the Invoke() method. 
 
-![alt text](https://raw.githubusercontent.com/mrogunlana/command-handler-pattern/master/screenshots/The-Command-Handler-Architecture-by-Diran-Ogunlana-012.jpg "The-Command-Handler-Architecture-by-Diran-Ogunlana-012.jpg")
+![alt text](https://raw.githubusercontent.com/mrogunlana/Panama/master/screenshots/The-Command-Handler-Architecture-by-Diran-Ogunlana-012.jpg "The-Command-Handler-Architecture-by-Diran-Ogunlana-012.jpg")
 
 ### The Handler class and IoC
 The Handler class constructor takes in a ServiceLocator that is used to find commands and validators. The project includes a sample for use with Autofac, but any IoC container could work, it would just need to be implemented behind an IServiceLocator interface. Commands implement the ICommand interface and validators implement IValidator interface. Depending on how your IoC of choice works, you would wire up your specific implementations to the interface. Or if your IoC supports auto locating classes by interface, all the classes can be wired up and instantiated. Here is a sample of how to use Autofac to locate and instantiate all classes implementing the IValidator interface as singletons.
