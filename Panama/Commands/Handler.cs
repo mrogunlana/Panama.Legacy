@@ -50,7 +50,7 @@ namespace Panama.Commands
             {
                 handler.Start();
 
-                _log.LogTrace<Handler>($"Handler Start: [{Commands.Count}] Commands Queued.");
+                _log?.LogTrace<Handler>($"Handler Start: [{Commands.Count}] Commands Queued.");
 
                 Commands.ForEach(c => {
 
@@ -61,13 +61,13 @@ namespace Panama.Commands
 
                     rule.Stop();
 
-                    _log.LogTrace(c, $"Command: {c.GetType().Name} Processed in [{rule.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
+                    _log?.LogTrace(c, $"Command: {c.GetType().Name} Processed in [{rule.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
                 });
 
             }
             catch (Exception ex)
             {
-                _log.LogException<Handler>(ex);
+                _log?.LogException<Handler>(ex);
 
                 var result = new Result()
                 {
@@ -80,7 +80,7 @@ namespace Panama.Commands
             {
                 handler.Stop();
 
-                _log.LogTrace<Handler>($"Handler Complete: [{handler.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
+                _log?.LogTrace<Handler>($"Handler Complete: [{handler.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
             }
 
             return new Result() { Success = true, Data = Data };
