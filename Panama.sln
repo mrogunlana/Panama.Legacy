@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panama", "Panama\Panama.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panama.Security", "Panama.Security\Panama.Security.csproj", "{169EE761-F9E6-42A0-A36E-359AAFDED4A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panama.IoC.Ninject", "Panama.IoC.Ninject\Panama.IoC.Ninject.csproj", "{302C0B29-69EE-485D-A25D-A87B333B13B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{169EE761-F9E6-42A0-A36E-359AAFDED4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{169EE761-F9E6-42A0-A36E-359AAFDED4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{169EE761-F9E6-42A0-A36E-359AAFDED4A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302C0B29-69EE-485D-A25D-A87B333B13B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302C0B29-69EE-485D-A25D-A87B333B13B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302C0B29-69EE-485D-A25D-A87B333B13B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302C0B29-69EE-485D-A25D-A87B333B13B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

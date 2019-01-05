@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Panama.Sql.Dapper</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>Panama</title>
     <authors>Diran Ogunlana</authors>
     <owners>Diran Ogunlana</owners>
@@ -10,14 +10,14 @@
     <projectUrl>https://github.com/mrogunlana/Panama</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A Dapper implementation for Panama, the command architecture for .Net developed by Diran Ogunlana</description>
-    <releaseNotes>Initial release - Basic SqlQuery Implmentation with Dapper</releaseNotes>
+    <releaseNotes>Panama (core) versioning sync</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>C# micro-framework command cqrs</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="12.0.0.0" />
       <dependency id="Dapper" version="1.50.5.0" />
       <dependency id="DapperExtensions" version="1.6.3.0" />
-      <dependency id="Panama" version="1.2.0" />
+      <dependency id="Panama" version="1.3.0" />
     </dependencies>
   </metadata>
 </package>

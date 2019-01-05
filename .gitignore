@@ -9,6 +9,10 @@ Panama.Sql.Dapper/obj/
 Panama.Sql.Dapper/bin/
 Panama.Tests/obj/
 Panama.Tests/bin/
+Panama.IoC.Ninject/bin/
+Panama.IoC.Ninject/obj/
+Panama.Security/bin/
+Panama.Security/obj/
 packages/
 Examples/autofac-webapi/.vs/
 Examples/autofac-webapi/dev.API/obj/
@@ -18,4 +22,6 @@ Examples/autofac-webapi/dev.Business/obj/
 Examples/autofac-webapi/dev.Business/bin/
 Examples/autofac-webapi/dev.Entities/obj/
 Examples/autofac-webapi/dev.Entities/bin/
+
+
 
