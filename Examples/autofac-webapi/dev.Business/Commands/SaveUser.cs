@@ -16,7 +16,7 @@ namespace dev.Business.Commands
         public void Execute(List<IModel> data)
         {
             var users = data.DataGet<User>();
-
+            
             foreach (var user in users)
                 _query.Save(user, new { user.ID });
         }
