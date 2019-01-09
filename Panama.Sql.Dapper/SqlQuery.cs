@@ -21,52 +21,6 @@ namespace Panama.Sql.Dapper
         private ILog _log;
         private ISqlGenerator _sql;
 
-        private string BuildUpdate<T>(T obj, object where) where T : class
-        {
-            var map = _sql?.Configuration?.GetMap<T>();
-            var name = map?.TableName;
-            if (string.IsNullOrEmpty(name))
-                throw new Exception($"Class Map for:{typeof(T).Name} could not be found.");
-
-            //get generic map from type
-            //map.Properties
-            //    .Where(x => x.KeyType == KeyType.NotAKey)
-            //    .Select(x => x.PropertyInfo.)
-
-            var set = new List<string>();
-            var filter = new List<string>();
-
-            var type = obj.GetType();
-            var properties = new List<PropertyInfo>(type.GetProperties())
-                .Where(x => !Attribute.IsDefined(x, typeof(ComputedAttribute)));
-
-            foreach (var property in properties)
-            {
-                var date = DateTime.MinValue;
-                var value = property.GetValue(obj, null);
-
-                if (value == null) continue;
-                if (DateTime.TryParse(value.ToString(), out date))
-                    if (date == DateTime.MinValue) continue;
-
-                set.Add($"{property.Name} = @{property.Name}");
-            }
-
-            type = where.GetType();
-            properties = new List<PropertyInfo>(type.GetProperties());
-
-            foreach (var property in properties)
-            {
-                var value = property.GetValue(where, null);
-
-                if (value == null) continue;
-
-                filter.Add($"{property.Name} = :{property.Name}");
-            }
-
-            return $"UPDATE {name} SET {string.Join(", ", set)} WHERE {string.Join(" AND ", filter)}";
-        }
-
         public SqlQuery(ILog log)
         {
             _log = log;
@@ -167,7 +121,10 @@ namespace Panama.Sql.Dapper
                     try
                     {
                         var map = _sql?.Configuration?.GetMap<T>();
-                        var name = map?.TableName;
+                        if (map == null)
+                            throw new Exception($"Class Map for:{typeof(T).Name} could not be found.");
+
+                        var name = map.TableName;
                         var table = models.ToDataTable();
                         var timer = Stopwatch.StartNew();
 
