@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Panama.Entities;
+using System.Collections.Generic;
 
 namespace Panama.Sql
 {
@@ -7,12 +8,11 @@ namespace Panama.Sql
         List<T> Get<T>(string sql, object parameters);
         void Insert<T>(T obj) where T : class;
         void Update<T>(T obj) where T : class;
-        void Save<T>(T obj, object parameters) where T : class;
-        bool Exist<T>(string sql, object parameters) where T : class;
+        void Save<T>(T obj, object parameters) where T : class, IModel;
+        bool Exist<T>(string sql, object parameters) where T : class, IModel;
         T GetSingle<T>(string sql, object parameters);
-        void Delete<T>(T obj) where T : class;
+        void Delete<T>(T obj) where T : class, IModel;
         void Execute(string sql, object parameters);
-        void InsertBatch<T>(List<T> models) where T : class;
-        void UpdateBatch<T>(List<T> models, List<object> parameters) where T : class;
+        void InsertBatch<T>(List<T> models) where T : class, IModel;
     }
 }

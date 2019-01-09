@@ -1,12 +1,16 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
+using DapperExtensions.Mapper;
 using DapperExtensions.Sql;
 using Newtonsoft.Json;
+using Panama.Entities;
 using Panama.Logger;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -17,28 +21,17 @@ namespace Panama.Sql.Dapper
         private ILog _log;
         private ISqlGenerator _sql;
 
-        private string BuildInsert<T>(T obj) where T : class
-        {
-            var name = _sql?.Configuration?.GetMap<T>()?.TableName;
-            if (string.IsNullOrEmpty(name))
-                throw new Exception($"Class Map for:{typeof(T).Name} could not be found.");
-
-            var type = obj.GetType();
-            var properties = new List<PropertyInfo>(type.GetProperties())
-                .Where(x => x.GetValue(obj, null) != null)
-                .Where(x => !Attribute.IsDefined(x, typeof(ComputedAttribute)))
-                .Select(x => x.Name);
-            var values = new List<string>(properties)
-                .Select(x => $":{x}");
-
-            return $"INSERT INTO {name}({string.Join(",", properties)}) VALUES ({string.Join(",", values)})";
-        }
-
         private string BuildUpdate<T>(T obj, object where) where T : class
         {
-            var name = _sql?.Configuration?.GetMap<T>()?.TableName;
+            var map = _sql?.Configuration?.GetMap<T>();
+            var name = map?.TableName;
             if (string.IsNullOrEmpty(name))
                 throw new Exception($"Class Map for:{typeof(T).Name} could not be found.");
+
+            //get generic map from type
+            //map.Properties
+            //    .Where(x => x.KeyType == KeyType.NotAKey)
+            //    .Select(x => x.PropertyInfo.)
 
             var set = new List<string>();
             var filter = new List<string>();
@@ -56,7 +49,7 @@ namespace Panama.Sql.Dapper
                 if (DateTime.TryParse(value.ToString(), out date))
                     if (date == DateTime.MinValue) continue;
 
-                set.Add($"{property.Name} = :{property.Name}");
+                set.Add($"{property.Name} = @{property.Name}");
             }
 
             type = where.GetType();
@@ -122,7 +115,7 @@ namespace Panama.Sql.Dapper
             }
         }
 
-        public void Save<T>(T obj, object parameters) where T : class
+        public void Save<T>(T obj, object parameters) where T : class, IModel
         {
             var properties = string.Join(" AND ", parameters.GetType().GetProperties().Select(x => $"{x.Name} = @{x.Name}"));
             var exist = Get<T>($"select * from [{ _sql.Configuration.GetMap<T>().TableName }] where {properties}", parameters);
@@ -132,7 +125,7 @@ namespace Panama.Sql.Dapper
                 Update(obj);
         }
 
-        public bool Exist<T>(string sql, object parameters) where T : class
+        public bool Exist<T>(string sql, object parameters) where T : class, IModel
         {
             var exist = Get<T>(sql, parameters);
             if (exist.Count == 0)
@@ -141,7 +134,7 @@ namespace Panama.Sql.Dapper
             return true;
         }
 
-        public void Delete<T>(T obj) where T : class
+        public void Delete<T>(T obj) where T : class, IModel
         {
             using (var connection = new SqlConnection(ConfigurationManager.AppSettings["Database"]))
             {
@@ -163,13 +156,8 @@ namespace Panama.Sql.Dapper
             }
         }
 
-        //TODO: the function below doesn't quite work yet..
-        //the build insert function passes a list of sql statements
-        //that is expecting to be merged with the data in the execute method..
-        public void InsertBatch<T>(List<T> models) where T : class
+        public void InsertBatch<T>(List<T> models) where T : class, IModel
         {
-            var sql = models.Select(x => BuildInsert(x));
-
             using (var connection = new SqlConnection(ConfigurationManager.AppSettings["Database"]))
             {
                 connection.Open();
@@ -178,53 +166,22 @@ namespace Panama.Sql.Dapper
                 {
                     try
                     {
-                        _log.LogDebug<SqlQuery>($"sql statements: {sql}");
+                        var map = _sql?.Configuration?.GetMap<T>();
+                        var name = map?.TableName;
+                        var table = models.ToDataTable();
+                        var timer = Stopwatch.StartNew();
 
-                        connection.Execute(string.Join(";", sql), transaction);
+                        timer.Start();
 
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-
-                        throw;
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-        }
-
-        //TODO: the function below doesn't quite work yet..
-        //the build insert function passes a list of sql statements
-        //that is expecting to be merged with the data in the execute method..
-        public void UpdateBatch<T>(List<T> models, List<object> parameters) where T : class
-        {
-            if (models.Count != parameters.Count)
-                throw new Exception("Model and parameter list must be the same length.");
-
-            var dictionary = new Dictionary<T, object>();
-            for (int i = 0; i < models.Count; i++)
-                dictionary.Add(models[i], parameters[i]);
-
-            var sql = dictionary.Select(x => BuildUpdate(x.Key, x.Value));
-
-            using (var connection = new SqlConnection(ConfigurationManager.AppSettings["Database"]))
-            {
-                connection.Open();
-
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        _log.LogDebug<SqlQuery>($"sql query: {sql}.");
-
-                        connection.Execute(string.Join(";", sql), transaction);
+                        using (var bulk = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
+                        {
+                            bulk.DestinationTableName = name;
+                            bulk.WriteToServer(table);
+                        }
 
                         transaction.Commit();
+
+                        _log.LogDebug<SqlQuery>($"bulk insert complete in: {timer.Elapsed.ToString(@"hh\:mm\:ss\:fff")}");
                     }
                     catch (Exception)
                     {
