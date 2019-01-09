@@ -128,6 +128,8 @@ namespace Panama.Sql.Dapper
                         var table = models.ToDataTable();
                         var timer = Stopwatch.StartNew();
 
+                        _log.LogTrace<SqlQuery>($"Bulk Insert on {name}. {models.Count} rows queued for insert.");
+
                         timer.Start();
 
                         using (var bulk = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
@@ -138,7 +140,7 @@ namespace Panama.Sql.Dapper
 
                         transaction.Commit();
 
-                        _log.LogDebug<SqlQuery>($"bulk insert complete in: {timer.Elapsed.ToString(@"hh\:mm\:ss\:fff")}");
+                        _log.LogTrace<SqlQuery>($"Bulk Insert on {name} complete in: {timer.Elapsed.ToString(@"hh\:mm\:ss\:fff")}");
                     }
                     catch (Exception)
                     {
