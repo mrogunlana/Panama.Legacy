@@ -14,8 +14,8 @@ namespace Panama.Sql.Dapper
         /// </summary>
         /// <typeparam name="T">IModel</typeparam>
         /// <param name="data">Models</param>
-        /// <returns></returns>
-        public static DataTable ToDataTable<T>(this IList<T> data) where T: IModel
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable<T>(this IList<T> data) where T: class, IModel
         {
             PropertyDescriptorCollection properties =
                 TypeDescriptor.GetProperties(typeof(T));

@@ -126,6 +126,21 @@ namespace Panama.Sql.Dapper
 
                         var name = map.TableName;
                         var table = models.ToDataTable();
+                        if (table.Rows.Count == 0)
+                            return;
+
+                        foreach (var property in map.Properties)
+                        {
+                            if (property.Ignored)
+                                table.Columns.Remove(property.Name);
+                            if (property.IsReadOnly)
+                                table.Columns.Remove(property.Name);
+                            if (property.KeyType == KeyType.Identity)
+                                table.Columns.Remove(property.Name);
+                            if (property.KeyType == KeyType.TriggerIdentity)
+                                table.Columns.Remove(property.Name);
+                        }
+
                         var timer = Stopwatch.StartNew();
 
                         _log.LogTrace<SqlQuery>($"Bulk Insert on {name}. {models.Count} rows queued for insert.");
@@ -134,7 +149,10 @@ namespace Panama.Sql.Dapper
 
                         using (var bulk = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
                         {
-                            bulk.DestinationTableName = name;
+                            foreach (DataColumn column in table.Columns)
+                                bulk.ColumnMappings.Add(column.ColumnName, column.ColumnName);
+
+                            bulk.DestinationTableName = $"[{name}]";
                             bulk.WriteToServer(table);
                         }
 
