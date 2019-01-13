@@ -110,7 +110,25 @@ namespace Panama.Sql.Dapper
             }
         }
 
-        public void InsertBatch<T>(List<T> models) where T : class, IModel
+        public T ExecuteScalar<T>(string sql, object parameters)
+        {
+            T result = default(T);
+
+            using (var connection = new SqlConnection(ConfigurationManager.AppSettings["Database"]))
+            {
+                _log.LogTrace<SqlQuery>($"EXECUTE: {sql}. Parameters: {JsonConvert.SerializeObject(parameters)}");
+
+                connection.Open();
+
+                result = connection.ExecuteScalar<T>(sql, parameters);
+
+                connection.Close();
+            }
+
+            return result;
+        }
+
+        public void InsertBatch<T>(List<T> models, int batch = 0) where T : class, IModel
         {
             using (var connection = new SqlConnection(ConfigurationManager.AppSettings["Database"]))
             {
@@ -151,6 +169,9 @@ namespace Panama.Sql.Dapper
                         {
                             foreach (DataColumn column in table.Columns)
                                 bulk.ColumnMappings.Add(column.ColumnName, column.ColumnName);
+
+                            if (batch > 0)
+                                bulk.BatchSize = batch;
 
                             bulk.DestinationTableName = $"[{name}]";
                             bulk.WriteToServer(table);

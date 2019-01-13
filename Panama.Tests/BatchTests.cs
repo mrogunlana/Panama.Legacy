@@ -47,7 +47,7 @@ namespace Panama.Tests
             var sql = ServiceLocator.Current.Resolve<IQuery>();
             var users = new List<User>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1000000; i++)
                 users.Add(new User() {
                     ID = Guid.NewGuid(),
                     UserName = $"User{i}"
@@ -55,9 +55,9 @@ namespace Panama.Tests
 
             sql.InsertBatch(users);
 
-            var results = sql.Get<User>($"select * from [User] where ID in ({string.Join(",", users.Select(x => $"'{x.ID.ToString()}'"))})", null);
+            var results = sql.ExecuteScalar<int>($"select count(*) from [User]", null);
 
-            Assert.AreEqual(users.Count, results.Count);
+            Assert.AreEqual(users.Count, results);
         }
     }
 }

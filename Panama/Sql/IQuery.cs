@@ -13,6 +13,7 @@ namespace Panama.Sql
         T GetSingle<T>(string sql, object parameters);
         void Delete<T>(T obj) where T : class, IModel;
         void Execute(string sql, object parameters);
-        void InsertBatch<T>(List<T> models) where T : class, IModel;
+        T ExecuteScalar<T>(string sql, object parameters);
+        void InsertBatch<T>(List<T> models, int batch = 0) where T : class, IModel;
     }
 }
