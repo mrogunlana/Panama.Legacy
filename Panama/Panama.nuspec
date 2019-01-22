@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Panama</id>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <title>Panama</title>
     <authors>Diran Ogunlana</authors>
     <owners>Diran Ogunlana</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/mrogunlana/Panama</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A simple command architecture for .Net developed by Diran Ogunlana</description>
-    <releaseNotes>Added InsertBatch definition on IQuery for Panama.SQL.Dapper bulk insert of IModel entities.</releaseNotes>
+    <releaseNotes>added handler id to trace log for easy find/search in file logs for debugging.</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>C# micro-framework command cqrs</tags>
     <dependencies>

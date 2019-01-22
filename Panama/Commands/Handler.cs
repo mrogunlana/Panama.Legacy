@@ -11,6 +11,7 @@ namespace Panama.Commands
     public class Handler : IHandler
     {
         private ILog _log;
+        private Guid _id = Guid.NewGuid();
         private readonly IServiceLocator _serviceLocator;
 
         public List<IModel> Data { get; set; }
@@ -50,7 +51,7 @@ namespace Panama.Commands
             {
                 handler.Start();
 
-                _log?.LogTrace<Handler>($"Handler Start: [{Commands.Count}] Commands Queued.");
+                _log?.LogTrace<Handler>($"Handler (HID:{_id.ToString()}) Start: [{Commands.Count}] Commands Queued.");
 
                 Commands.ForEach(c => {
 
@@ -61,7 +62,7 @@ namespace Panama.Commands
 
                     rule.Stop();
 
-                    _log?.LogTrace(c, $"Command: {c.GetType().Name} Processed in [{rule.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
+                    _log?.LogTrace(c, $"HID:{_id.ToString()}, Command: {c.GetType().Name} Processed in [{rule.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
                 });
 
             }
@@ -73,14 +74,14 @@ namespace Panama.Commands
                 {
                     Success = false
                 };
-                result.AddMessage($"Looks like there was a problem with your request.");
+                result.AddMessage($"HID:{_id.ToString()}, Looks like there was a problem with your request.");
                 return result;
             }
             finally
             {
                 handler.Stop();
 
-                _log?.LogTrace<Handler>($"Handler Complete: [{handler.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
+                _log?.LogTrace<Handler>($"Handler (HID:{_id.ToString()}) Complete: [{handler.Elapsed.ToString(@"hh\:mm\:ss\:fff")}]");
             }
 
             return new Result() { Success = true, Data = Data };

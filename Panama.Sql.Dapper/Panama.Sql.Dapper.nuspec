@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Panama.Sql.Dapper</id>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <title>Panama</title>
     <authors>Diran Ogunlana</authors>
     <owners>Diran Ogunlana</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/mrogunlana/Panama</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A Dapper implementation for Panama, the command architecture for .Net developed by Diran Ogunlana</description>
-    <releaseNotes>Panama (core) versioning sync</releaseNotes>
+    <releaseNotes>Added InsertBatch Implementation with model extensions for IModel to DataTable conversion based on DapperExension Map class</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>C# micro-framework command cqrs</tags>
     <dependencies>
