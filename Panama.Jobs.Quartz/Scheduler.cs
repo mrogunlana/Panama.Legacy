@@ -35,6 +35,26 @@ namespace Panama.Jobs.Quartz
             _log.LogInformation<Scheduler>($"Scheduler shutdown.");
         }
 
+        public void Queue<T>(T job, int minutes)
+        {
+            var name = job.GetType().Name;
+
+            ITrigger trigger = TriggerBuilder.Create()
+                    .WithIdentity($"{name}_EveryMinute", "Group1")
+                    .StartNow()
+                    .WithSimpleSchedule(x => x
+                        .WithIntervalInMinutes(minutes)
+                        .RepeatForever())
+                    .Build();
+
+            //note: this breaks if T not IJob type...
+            IJobDetail detail = JobBuilder.Create(typeof(T))
+                    .WithIdentity($"{name}_Job", "Group1")
+                    .Build();
+            
+            _scheduler.ScheduleJob(detail, trigger);
+        }
+
         public void Queue<T>(T job)
         {
             var name = job.GetType().Name;
@@ -51,7 +71,7 @@ namespace Panama.Jobs.Quartz
             IJobDetail detail = JobBuilder.Create(typeof(T))
                     .WithIdentity($"{name}_Job", "Group1")
                     .Build();
-            
+
             _scheduler.ScheduleJob(detail, trigger);
         }
 

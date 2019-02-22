@@ -1,6 +1,5 @@
 C:\Projects\command-handler-pattern\Panama.Security\bin\Release\Panama.Security.dll
 C:\Projects\command-handler-pattern\Panama.Security\bin\Release\Panama.Security.pdb
-C:\Projects\command-handler-pattern\Panama.Security\obj\Release\Panama.Security.csprojResolveAssemblyReference.cache
 C:\Projects\command-handler-pattern\Panama.Security\obj\Release\Panama.Security.csproj.CoreCompileInputs.cache
 C:\Projects\command-handler-pattern\Panama.Security\obj\Release\Panama.Security.dll
 C:\Projects\command-handler-pattern\Panama.Security\obj\Release\Panama.Security.pdb
