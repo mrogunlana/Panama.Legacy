@@ -1,3 +1,5 @@
+> **NOTE:** This library is deprecatied in favor of https://github.com/mrogunlana/Panama.Core and will be moved to a different repository URL
+
 # Panama - a simple command architecture for .Net
 
 Panama is a unique design pattern, created to simplify software design and more suitable in designing systems for over 70% of medium and large scale business design projects. It's goal is to reduce complexity normally found in N-Tier application where there are multiple layers (i.e. Service Layer, DataAcces Layer) required to invoke commands (i.e. save an object to a database). With Panama, the ability to invoke commands is reduced to one object that can be called directly from the UI or other top layer that a user or service may interact with directly.
