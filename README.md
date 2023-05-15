@@ -1,4 +1,4 @@
-> **NOTE:** This library is deprecatied in favor of https://github.com/mrogunlana/Panama.Core and will be moved to a different repository URL
+> **NOTE:** This library is deprecatied in favor of https://github.com/mrogunlana/Panama.Core
 
 # Panama - a simple command architecture for .Net
 
